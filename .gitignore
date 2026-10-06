@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+extension/config.js
+!extension/config.example.js
+.DS_Store
