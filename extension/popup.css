@@ -1,0 +1,153 @@
+* { box-sizing: border-box; }
+body {
+  width: 340px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+  background-color: #f9fafb;
+}
+.container {
+  padding: 16px;
+}
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.hidden {
+  display: none !important;
+}
+.header {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+}
+.consent-box {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.consent-box strong { color: #111827; display: block; margin-bottom: 4px; }
+.text-sm { font-size: 12px; }
+.mb-2 { margin-bottom: 8px; }
+.mt-1 { margin-top: 4px; }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+input[type="text"], select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type="text"]:focus, select:focus {
+  border-color: #6366f1;
+}
+#classCode {
+  text-transform: uppercase;
+}
+.checkbox-group {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+}
+.checkbox-group input {
+  margin-top: 2px;
+}
+.checkbox-group label {
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: pointer;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+button:hover { opacity: 0.9; }
+button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+button.danger {
+  background-color: #ef4444;
+}
+.error-text {
+  color: #dc2626;
+  font-size: 13px;
+  margin: 0;
+}
+.info-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.indicator-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+.tracking-text {
+  color: #10b981;
+  font-weight: 600;
+  font-size: 14px;
+}
+.class-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+.student-name {
+  font-size: 14px;
+  color: #4b5563;
+  margin: 0;
+}
+.status-box {
+  display: flex;
+  justify-content: space-between;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+.status-label {
+  color: #6b7280;
+}
+.status-value {
+  font-weight: 500;
+  color: #111827;
+}

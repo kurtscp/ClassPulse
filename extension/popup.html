@@ -3,12 +3,75 @@
 <head>
   <meta charset="utf-8">
   <title>ClassPulse</title>
-  <style>
-    body { width: 320px; font-family: sans-serif; padding: 16px; margin: 0; }
-  </style>
+  <link rel="stylesheet" href="popup.css">
+  <script type="module" src="popup.js"></script>
 </head>
 <body>
-  <h2>ClassPulse</h2>
-  <p>Popup coming soon...</p>
+  <div id="app" class="container">
+    <div id="loadingView" class="view hidden">
+      <p>Loading...</p>
+    </div>
+
+    <!-- NOT TRACKING VIEW -->
+    <div id="setupView" class="view hidden">
+      <h2 class="header">ClassPulse</h2>
+      
+      <div class="consent-box">
+        <strong>Privacy Consent</strong>
+        <p class="mb-2 text-sm"><strong>Collected:</strong> Google Meet tab open/focus status, computer idle status.</p>
+        <p class="text-sm"><strong>NOT Collected:</strong> Page content, other tabs' names/links, chat, camera, mic, keystrokes.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="classCode">Class Code</label>
+        <input type="text" id="classCode" placeholder="ABC-1234" maxlength="8" />
+      </div>
+
+      <div id="rosterContainer" class="form-group hidden">
+        <label for="rosterSelect">Student Name</label>
+        <select id="rosterSelect">
+          <option value="">Select your name...</option>
+        </select>
+        <p id="rosterMessage" class="hidden error-text text-sm mt-1"></p>
+      </div>
+
+      <div id="freeTextContainer" class="form-group hidden">
+        <label for="studentName">Full Name</label>
+        <input type="text" id="studentName" placeholder="Juan dela Cruz" />
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="consentCheck" />
+        <label for="consentCheck">I understand and agree to the data collection</label>
+      </div>
+
+      <p id="setupError" class="error-text hidden"></p>
+
+      <button id="startBtn" disabled>Start Tracking</button>
+    </div>
+
+    <!-- TRACKING VIEW -->
+    <div id="trackingView" class="view hidden">
+      <h2 class="header">ClassPulse</h2>
+      
+      <div class="info-card">
+        <div class="indicator-row">
+          <span class="pulse-dot"></span>
+          <span class="tracking-text">Tracking is ON</span>
+        </div>
+        <p class="class-title" id="trackClassName"></p>
+        <p class="student-name" id="trackStudentName"></p>
+      </div>
+
+      <div class="status-box">
+        <span class="status-label">Status:</span>
+        <span id="trackStatus" class="status-value">Waiting...</span>
+      </div>
+
+      <p id="trackError" class="error-text hidden"></p>
+
+      <button id="stopBtn" class="danger">Stop Tracking</button>
+    </div>
+  </div>
 </body>
 </html>
