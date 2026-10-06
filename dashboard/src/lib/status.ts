@@ -1,45 +1,32 @@
-import type { Participant, Session, RosterEntry } from './types';
+import type { Participant } from './types';
+import type { Settings } from './settings';
 
-export type ParticipantStatus = 'Offline' | 'Distracted' | 'Idle' | 'Active' | 'Not Joined';
+export type ParticipantStatus = 'active' | 'distracted' | 'idle' | 'offline';
+export type Status = ParticipantStatus | 'not_joined';
 
-export function getParticipantStatus(
-  participant: Participant | null,
-  session: Session,
-  rosterEntry?: RosterEntry
-): ParticipantStatus {
-  if (rosterEntry && !participant) {
-    return 'Not Joined';
-  }
-  if (!participant) return 'Offline';
+export function getStatus(p: Participant, settings: Settings, now: Date): ParticipantStatus {
+  if (!p.last_seen_at || !p.meet_tab_open) return 'offline';
 
-  const settings = session.settings || {};
-  const offlineAfter = settings.offline_after_seconds || 90;
-  const distractedAfter = settings.distracted_after_seconds || 60;
-  const idleAfter = settings.idle_after_seconds || 180;
+  const elapsedOffline = (now.getTime() - new Date(p.last_seen_at).getTime()) / 1000;
+  if (elapsedOffline > settings.offline_after_seconds) return 'offline';
 
-  const now = new Date().getTime();
-
-  // Offline
-  const lastSeenTime = participant.last_seen_at ? new Date(participant.last_seen_at).getTime() : 0;
-  if (!participant.meet_tab_open || (now - lastSeenTime) / 1000 > offlineAfter * 1000) {
-    return 'Offline';
+  if (!p.meet_tab_focused && p.unfocused_since) {
+    const elapsedUnfocused = (now.getTime() - new Date(p.unfocused_since).getTime()) / 1000;
+    if (elapsedUnfocused > settings.distracted_after_seconds) return 'distracted';
   }
 
-  // Distracted
-  if (participant.meet_tab_open && !participant.meet_tab_focused && participant.unfocused_since) {
-    const unfocusedTime = new Date(participant.unfocused_since).getTime();
-    if ((now - unfocusedTime) / 1000 > distractedAfter * 1000) {
-      return 'Distracted';
-    }
+  if ((p.system_state === 'idle' || p.system_state === 'locked') && p.idle_since) {
+    const elapsedIdle = (now.getTime() - new Date(p.idle_since).getTime()) / 1000;
+    if (elapsedIdle > settings.idle_after_seconds) return 'idle';
   }
 
-  // Idle
-  if ((participant.system_state === 'idle' || participant.system_state === 'locked') && participant.idle_since) {
-    const idleTime = new Date(participant.idle_since).getTime();
-    if ((now - idleTime) / 1000 > idleAfter * 1000) {
-      return 'Idle';
-    }
-  }
-
-  return 'Active';
+  return 'active';
 }
+
+export const STATUS_META: Record<Status, { label: string; icon: string; classes: string }> = {
+  offline: { label: 'Offline', icon: '🔴', classes: 'bg-red-100 text-red-800 border-red-200' },
+  distracted: { label: 'Distracted', icon: '⚠️', classes: 'bg-orange-100 text-orange-800 border-orange-200' },
+  idle: { label: 'Idle', icon: '🌙', classes: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
+  active: { label: 'Active', icon: '✅', classes: 'bg-green-100 text-green-800 border-green-200' },
+  not_joined: { label: 'Not joined', icon: '⚪', classes: 'bg-gray-100 text-gray-500 border-gray-200' }
+};

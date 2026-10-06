@@ -4,11 +4,14 @@ import { supabase } from '../lib/supabase';
 import type { Session, Participant, RosterEntry } from '../lib/types';
 import { resolveSettings } from '../lib/settings';
 import type { Settings } from '../lib/settings';
+import { buildBoardRows } from '../lib/board';
+import type { BoardRow } from '../lib/board';
 
 type SessionContextType = {
   session: Session | null;
   participants: Participant[];
   roster: RosterEntry[];
+  rows: BoardRow[];
   settings: Settings;
   now: Date;
   loading: boolean;
@@ -90,9 +93,10 @@ export const SessionProvider = ({ sessionId, children }: { sessionId: string; ch
   }, []);
 
   const settings = session ? resolveSettings(session.settings) : resolveSettings({});
+  const rows = buildBoardRows(roster, participants, settings, now);
 
   return (
-    <SessionContext.Provider value={{ session, participants, roster, settings, now, loading, error, refresh: loadData }}>
+    <SessionContext.Provider value={{ session, participants, roster, rows, settings, now, loading, error, refresh: loadData }}>
       {children}
     </SessionContext.Provider>
   );
