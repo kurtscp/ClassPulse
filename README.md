@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/banner.svg" alt="" width="100%" />
+  <img src="docs/assets/banner.svg" alt="ClassPulse banner" width="100%" />
 </p>
 
 <h1 align="center">ClassPulse</h1>
@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="#4-getting-started-everyone">Getting Started</a> ·
-  <a href="#2-team-table">Team Tracks</a> ·
+  <a href="#2-team-table">Team Table</a> ·
   <a href="docs/ClassPulse_MVP.md">MVP Doc</a> ·
   <a href="https://github.com/kurtscp/ClassPulse/issues">Report Bug</a>
 </p>
