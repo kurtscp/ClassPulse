@@ -10,7 +10,6 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs",
     "idle",
     "alarms",
     "storage",

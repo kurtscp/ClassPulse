@@ -21,24 +21,16 @@ export async function collectSignals(meetLink) {
   let meet_tab_open = false;
   let meet_tab_focused = false;
 
-  const windows = await chrome.windows.getAll({ populate: true });
-  for (const win of windows) {
-    let activeTabMatches = false;
-
-    if (win.tabs) {
-      for (const tab of win.tabs) {
-        if (isMatch(tab.url)) {
-          meet_tab_open = true;
-          if (tab.active) {
-            activeTabMatches = true;
-          }
+  const meetTabs = await chrome.tabs.query({ url: "https://meet.google.com/*" });
+  for (const tab of meetTabs) {
+    if (isMatch(tab.url)) {
+      meet_tab_open = true;
+      if (tab.active) {
+        const win = await chrome.windows.get(tab.windowId);
+        if (win.focused) {
+          meet_tab_focused = true;
         }
       }
-    }
-
-    // Window must be focused, and the active tab in that window must be the Meet tab
-    if (win.focused && activeTabMatches) {
-      meet_tab_focused = true;
     }
   }
 
