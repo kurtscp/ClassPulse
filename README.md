@@ -253,19 +253,30 @@ Create a session in the dashboard first and paste its class code.
 - Kurt merges approved PRs into `main`.
 
 ### When Done with you Part
-Update to the latest version of the main branch:
+
+Eto yung pinaka tama, wag niyo sundin yung sinabi ko sa vid. Sunod sunod niyo lang i-run ito.
+
+Stage and commit changes on the feature branch before pulling updates:
 ```bash
-git fetch origin
+git add .
+git commit -m "feat(your-track): [description]"
+```
+
+Pull the latest changes from main and place your new commits on top:
+```bash
 git pull --rebase origin main
+```
+
+Navigate to the project directory and verify everything builds and passes tests:
+```bash
 cd dashboard
 npm run lint
 npm run build
 npm test
 ```
-Then do this:
+
+Push the updated feature branch to origin:
 ```bash
-git add .
-git commit -m "feat(your-track): [description]"
 git push origin feature/[your-branch]
 ```
 
