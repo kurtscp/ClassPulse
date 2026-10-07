@@ -151,7 +151,10 @@ Branch names:
 | Estrella | `feature/live-board` |
 
 ### Dashboard setup
+<<<<<<< HEAD
 
+=======
+>>>>>>> c6c6d3e (fix(readMe): Remove Files)
 **PowerShell:**
 
 ```powershell
@@ -179,8 +182,11 @@ Open the URL Vite prints (usually `http://localhost:5173`). Create an instructor
 
 ### Extension setup
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c6c6d3e (fix(readMe): Remove Files)
 **PowerShell:**
 
 ```powershell
@@ -253,6 +259,23 @@ Create a session in the dashboard first and paste its class code.
 - Push **only** that branch. **Never push to `main`.**
 - Kurt merges approved PRs into `main`.
 
+### When Done with you Part
+Update to the latest version of the main branch:
+```bash
+git fetch origin
+git pull --rebase origin main
+cd dashboard
+npm run lint
+npm run build
+npm test
+```
+Then do this:
+```bash
+git add .
+git commit -m "feat(your-track): [description]"
+git push origin feature/[your-branch]
+```
+
 ### Commits
 
 Prefer small, clear commits, for example:
@@ -260,15 +283,6 @@ Prefer small, clear commits, for example:
 - `feat(checkins): send check-in button and live panel`
 - `fix(settings): block offline below 60 seconds`
 - `test(report): csv escaping for commas and quotes`
-
-### Before every Pull Request
-
-```bash
-git fetch origin
-git pull --rebase origin main
-cd dashboard
-npm run lint && npm run build && npm test
-```
 
 ### Opening a Pull Request
 
