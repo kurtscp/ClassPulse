@@ -1,7 +1,10 @@
 import { getState, setState } from './lib/state.js';
 import { rpc } from './lib/supabase.js';
 import { collectSignals } from './lib/collectors.js';
-import { handlePendingCheckin } from './modules/checkin.js';
+import { handlePendingCheckin, registerCheckinListeners } from './modules/checkin.js';
+
+// MV3 requires all event listeners to be registered synchronously at service worker startup.
+registerCheckinListeners();
 
 async function updateBadge(isTracking) {
   if (isTracking) {

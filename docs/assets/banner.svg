@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="8" viewBox="0 0 1200 8" preserveAspectRatio="none" role="img" aria-label="ClassPulse blue gradient banner">
+  <defs>
+    <linearGradient id="cpBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0B4F8A"/>
+      <stop offset="45%" stop-color="#1D7DD8"/>
+      <stop offset="100%" stop-color="#5EC8F8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="8" fill="url(#cpBlue)"/>
+</svg>
