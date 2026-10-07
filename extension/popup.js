@@ -1,6 +1,20 @@
 import { getState, setState } from './lib/state.js';
 import { rpc } from './lib/supabase.js';
 
+function formatErrorMessage(err) {
+  const msg = (err.message || '').toLowerCase();
+  if (msg.includes('ended')) {
+    return 'This session has ended. Check with your instructor if you think this is a mistake.';
+  } else if (msg.includes('not found') || msg.includes('invalid') || msg.includes('code') || msg.includes('class')) {
+    return 'Class code not found. Please double-check the code provided by your instructor.';
+  } else if (msg.includes('token') || msg.includes('participant') || msg.includes('unauthorized') || msg.includes('removed')) {
+    return 'Tracking stopped. You were removed from this session by your instructor.';
+  } else if (msg.includes('fetch') || msg.includes('network') || msg.includes('timeout') || msg.includes('http')) {
+    return 'Unable to connect. Please check your internet connection and try again.';
+  }
+  return err.message || 'An unknown error occurred.';
+}
+
 const ui = {
   loading: document.getElementById('loadingView'),
   setup: document.getElementById('setupView'),
@@ -117,7 +131,7 @@ async function handleCodeInput() {
       ui.freeTextContainer.classList.remove('hidden');
     }
   } catch (err) {
-    ui.setupError.textContent = `Error fetching class: ${err.message}`;
+    ui.setupError.textContent = formatErrorMessage(err);
     ui.setupError.classList.remove('hidden');
     currentRosterData = null;
     ui.rosterContainer.classList.add('hidden');
@@ -189,20 +203,33 @@ ui.startBtn.addEventListener('click', async () => {
     chrome.runtime.sendMessage({ type: 'START_TRACKING' });
     init();
   } catch (err) {
-    ui.setupError.textContent = err.message;
+    ui.setupError.textContent = formatErrorMessage(err);
     ui.setupError.classList.remove('hidden');
     ui.startBtn.disabled = false;
     
-    if (err.message.toLowerCase().includes('taken') || err.message.toLowerCase().includes('roster')) {
+    const msg = (err.message || '').toLowerCase();
+    if (msg.includes('taken') || msg.includes('roster')) {
       handleCodeInput(); 
     }
   }
 });
 
 ui.stopBtn.addEventListener('click', async () => {
-  await setState({ tracking: false });
-  chrome.runtime.sendMessage({ type: 'STOP_TRACKING' });
-  init();
+  try {
+    await setState({ 
+      tracking: false,
+      participantId: null,
+      token: null,
+      rosterEntryId: null,
+      classCode: '',
+      studentName: ''
+    });
+    
+    chrome.runtime.sendMessage({ type: 'STOP_TRACKING' });
+    await init();
+  } catch (err) {
+    console.error('Stop tracking error:', err);
+  }
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {

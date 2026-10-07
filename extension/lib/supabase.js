@@ -11,12 +11,9 @@ export async function rpc(fnName, args = {}) {
   const headers = {
     'Content-Type': 'application/json',
     'apikey': CONFIG.SUPABASE_KEY,
+    'Authorization': `Bearer ${CONFIG.SUPABASE_KEY}`,
     'Prefer': 'return=representation'
   };
-
-  if (CONFIG.SUPABASE_KEY.startsWith('eyJ')) {
-    headers['Authorization'] = `Bearer ${CONFIG.SUPABASE_KEY}`;
-  }
 
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), 8000);
