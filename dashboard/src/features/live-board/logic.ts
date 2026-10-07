@@ -56,3 +56,31 @@ export function sortRows(rows: BoardRow[], sortMode: SortMode): BoardRow[] {
     return a.name.localeCompare(b.name);
   });
 }
+
+import { formatTimeAgo } from '../../lib/format';
+
+export function generateCSV(rows: BoardRow[], now: Date): string {
+  const header = ['Student Name', 'Status', 'Last Seen'];
+  const lines = [header.join(',')];
+  for (const row of rows) {
+    const lastSeenStr = row.participant ? formatTimeAgo(row.participant.last_seen_at, now) : 'N/A';
+    lines.push([
+      `"${row.name.replace(/"/g, '""')}"`,
+      row.status,
+      `"${lastSeenStr}"`
+    ].join(','));
+  }
+  return lines.join('\n');
+}
+
+export function downloadCSV(csvContent: string, filename: string) {
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
