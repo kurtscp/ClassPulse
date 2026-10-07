@@ -152,11 +152,6 @@ Branch names:
 
 ### Dashboard setup
 
-```bash
-cd dashboard
-cp .env.example .env
-```
-
 **PowerShell:**
 
 ```powershell
@@ -184,10 +179,7 @@ Open the URL Vite prints (usually `http://localhost:5173`). Create an instructor
 
 ### Extension setup
 
-```bash
-cd extension
-cp config.example.js config.js
-```
+
 
 **PowerShell:**
 
