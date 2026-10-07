@@ -151,10 +151,6 @@ Branch names:
 | Estrella | `feature/live-board` |
 
 ### Dashboard setup
-<<<<<<< HEAD
-
-=======
->>>>>>> c6c6d3e (fix(readMe): Remove Files)
 **PowerShell:**
 
 ```powershell
@@ -182,11 +178,8 @@ Open the URL Vite prints (usually `http://localhost:5173`). Create an instructor
 
 ### Extension setup
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> c6c6d3e (fix(readMe): Remove Files)
 **PowerShell:**
 
 ```powershell
